@@ -1,0 +1,25 @@
+# Node.js (Backend)
+backend/node_modules/
+backend/.env
+backend/logs/
+backend/*.log
+backend/debug.log
+backend/*.sqlite
+backend/*.db
+
+# React.js (Frontend)
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/logs/
+frontend/*.log
+frontend/debug.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# General Editor Files
+.vscode/
+.idea/
+*.swp
