@@ -11,8 +11,14 @@ const store = configureStore({
     tickets: ticketReducer,
   },
   preloadedState: {
-    auth: { user, token },
+    auth: { user, token, isAuthenticated: !!token },
   },
+});
+
+store.subscribe(() => {
+  const { user, token } = store.getState().auth;
+  localStorage.setItem("token", token || "");
+  localStorage.setItem("user", JSON.stringify(user || null));
 });
 
 export default store;
