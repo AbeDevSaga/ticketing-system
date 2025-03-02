@@ -13,6 +13,11 @@ app.use(cors());
 
 connectDB();
 
+app.use((req, res, next) => {
+  console.log(`${req.method} request made to: ${req.url}`); // Logs the HTTP method and route
+  next(); // Proceed to the next middleware or route handler
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api", ticketRoutes);
 

@@ -1,10 +1,10 @@
 import React from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const LandingPage = () => (
   <div className="min-h-screen flex flex-col bg-gradient">
-    {/* Main Content */}
     <div className="flex-grow flex flex-col justify-center items-center text-white px-4 py-8">
       <div className="text-center max-w-2xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-bounce">
@@ -29,7 +29,6 @@ const LandingPage = () => (
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="mt-16 w-full max-w-6xl px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-md hover:bg-opacity-20 transition duration-300">
@@ -53,14 +52,7 @@ const LandingPage = () => (
         </div>
       </div>
     </div>
-
-    {/* Footer */}
-    <footer className="bg-white bg-opacity-10 py-4 text-center text-gray-300">
-      <p>
-        © 2025 Ticketing System. Developed by{" "}
-        <span className="font-semibold">Amanuel Daniel</span>.
-      </p>
-    </footer>
+    <Footer />
   </div>
 );
 

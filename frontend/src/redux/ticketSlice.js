@@ -1,27 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Async thunk to fetch tickets
-export const fetchTickets = createAsyncThunk("tickets/fetchTickets", async (_, { getState }) => {
-  const { token } = getState().auth;
-  const res = await axios.get("/api/tickets", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-});
+export const fetchTickets = createAsyncThunk(
+  "tickets/fetchTickets",
+  async (_, { getState }) => {
+    const { token } = getState().auth;
+    const res = await axios.get("http://localhost:5000/api/tickets", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  }
+);
 
-// Async thunk to create a ticket
-export const createTicket = createAsyncThunk("tickets/createTicket", async (ticketData, { getState }) => {
-  const { token } = getState().auth;
-  const res = await axios.post("/api/tickets", ticketData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-});
+export const createTicket = createAsyncThunk(
+  "tickets/createTicket",
+  async (ticketData, { getState }) => {
+    const { token } = getState().auth;
+    const res = await axios.post("http://localhost:5000/api/tickets", ticketData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  }
+);
 
 const ticketSlice = createSlice({
   name: "tickets",
-  initialState: { tickets: [], status: "idle", error: null },
+  initialState: {
+    tickets: [],
+    status: "idle", 
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
