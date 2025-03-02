@@ -16,7 +16,6 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password)
 
   try {
     const user = await User.findOne({ username });
