@@ -1,17 +1,32 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { validateForm } from "./Validator";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
+  const [errors, setErrors] = useState({}); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validateForm({ username, email, password });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; 
+    }
+
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", { username, password, role });
+      await axios.post("http://localhost:5000/api/auth/signup", {
+        username,
+        email,
+        password,
+        role,
+      });
       alert("Signup successful! Please login.");
       navigate("/login");
     } catch (err) {
@@ -33,6 +48,18 @@ const Signup = () => {
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
           <input
             type="password"
             placeholder="Password"
@@ -41,14 +68,21 @@ const Signup = () => {
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option className="bg-purple-400" value="user">User</option>
-            <option className="bg-purple-400" value="admin">Admin</option>
+            <option className="bg-purple-400" value="user">
+              User
+            </option>
+            <option className="bg-purple-400" value="admin">
+              Admin
+            </option>
           </select>
+
           <button
             type="submit"
             className="w-full bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition duration-300"
