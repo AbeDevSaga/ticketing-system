@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { validateForm } from "./Validator";
+import CustomSelect from "../components/Select";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
-  const [errors, setErrors] = useState({}); 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,7 +18,7 @@ const Signup = () => {
     const validationErrors = validateForm({ username, email, password });
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      return; 
+      return;
     }
 
     try {
@@ -35,6 +36,11 @@ const Signup = () => {
     }
   };
 
+  const roleOptions = [
+    { value: "user", label: "User" },
+    { value: "admin", label: "Admin" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient text-white px-4">
       <div className="bg-white bg-opacity-10 p-8 rounded-lg backdrop-blur-md shadow-lg w-full max-w-md">
@@ -48,7 +54,9 @@ const Signup = () => {
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+          {errors.username && (
+            <p className="text-red-500 text-sm">{errors.username}</p>
+          )}
 
           <input
             type="email"
@@ -58,7 +66,9 @@ const Signup = () => {
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
 
           <input
             type="password"
@@ -68,20 +78,16 @@ const Signup = () => {
             className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 placeholder-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
 
-          <select
+          <CustomSelect
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option className="bg-purple-400" value="user">
-              User
-            </option>
-            <option className="bg-purple-400" value="admin">
-              Admin
-            </option>
-          </select>
+            options={roleOptions}
+            className="mt-4"
+          />
 
           <button
             type="submit"

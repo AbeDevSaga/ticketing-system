@@ -18,6 +18,7 @@ const Login = () => {
         email,
         password,
       });
+      console.log(res.data);
       dispatch(setCredentials({ user: res.data.user, token: res.data.token }));
       localStorage.setItem("token", res.data.token);
       if (res.data.user.role === "admin") {
